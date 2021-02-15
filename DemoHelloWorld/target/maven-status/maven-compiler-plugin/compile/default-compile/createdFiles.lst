@@ -1,0 +1,5 @@
+in/dreamplug/demo/resource/DemoResource.class
+in/dreamplug/demo/HelloConfiguration.class
+in/dreamplug/demo/HelloApplication.class
+in/dreamplug/demo/health/DemoHealthCheck.class
+in/dreamplug/demo/api/Representation.class
