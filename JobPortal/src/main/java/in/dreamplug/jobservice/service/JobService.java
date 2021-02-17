@@ -6,7 +6,6 @@ import com.google.common.base.Charsets;
 import in.dreamplug.jobservice.core.JobRepo;
 import in.dreamplug.jobservice.domain.Job;
 import io.dropwizard.util.Resources;
-import org.w3c.dom.ls.LSOutput;
 
 import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
@@ -37,13 +36,6 @@ public class JobService implements JobRepo {
     }
 
 
-    @Override
-    public List<Job> getAllJobs() {
-
-        return jobs.stream()
-                .sorted(Comparator.comparing(Job::getUpdatedAt).reversed())
-                .collect(Collectors.toList());
-    }
 
     @Override
     public Optional<Job> getByJobID(String jobId) {
@@ -67,33 +59,44 @@ public class JobService implements JobRepo {
         return existingJob;
     }
 
-    @Override
-    public List<Job> getJobs(String jobId, String keyword, String location, String company) {
-        List<Job> lst = jobs.stream()
-                .filter(job -> job.getJobId().equals(jobId))
-                .filter(job -> job.getKeyword().matches(keyword))
-                .filter(job -> job.getLocation().equalsIgnoreCase(location))
-                .filter(job -> job.getCompany().equalsIgnoreCase(company))
-                .sorted(Comparator.comparing(Job::getUpdatedAt).reversed())
-                .collect(Collectors.toList());
-        return lst;
-    }
+
 
     @Override
-    public List<Job> getJobsTest(Optional<String> jobId, Optional<String> keyword, Optional<String> location, Optional<String> company) {
+    public List<Job> getJobs(Optional<String> jobId, Optional<String> keyword, Optional<String> location, Optional<String> company) {
 
-        List<Optional<String>> params = Arrays.asList(jobId, keyword, location, company);
-        params.stream().filter(Optional ::isPresent).collect(Collectors.toList());
 
-        params.stream().forEach(System.out::println);
+        List<Job> filteredList = jobs;
 
-        List<Job> lst = jobs.stream()
-                .filter(job -> jobId.isPresent() ? job.getJobId().equals(jobId.get()) : Boolean.parseBoolean(job.getLocation().toLowerCase(Locale.ROOT)))
-                .filter(job -> keyword.isPresent() ? job.getKeyword().toLowerCase(Locale.ROOT).matches(keyword.get()): Boolean.parseBoolean(job.getLocation().toLowerCase(Locale.ROOT)))
-                .filter(job -> location.isPresent() ?job.getLocation().equalsIgnoreCase(location.get()): Boolean.parseBoolean(job.getLocation().toLowerCase(Locale.ROOT)))
-                .filter(job -> company.isPresent() ? job.getCompany().equalsIgnoreCase(company.get()): Boolean.parseBoolean(job.getLocation().toLowerCase(Locale.ROOT)))
-                .collect(Collectors.toList());
-        return lst;
+
+        if(jobId.isPresent()){
+            System.out.println(jobId.get());
+            filteredList = filteredList.stream()
+                    .filter(job -> job.getJobId().equals(jobId.get()))
+                    .collect(Collectors.toList());
+        }
+
+        if(keyword.isPresent()){
+            System.out.println(keyword.get());
+            filteredList = filteredList.stream()
+                    .filter(job -> job.getKeyword().toLowerCase(Locale.ROOT).contains(keyword.get().toLowerCase(Locale.ROOT)))
+                    .collect(Collectors.toList());
+        }
+
+        if(location.isPresent()){
+            System.out.println(location.get());
+            filteredList = filteredList.stream()
+                    .filter(job -> job.getLocation().equalsIgnoreCase(location.get()))
+                    .collect(Collectors.toList());
+        }
+        if(company.isPresent()){
+            System.out.println(company.get());
+            filteredList = filteredList.stream()
+                    .filter(job -> job.getCompany().equalsIgnoreCase(company.get()))
+                    .collect(Collectors.toList());
+        }
+
+        return filteredList.stream().sorted(Comparator.comparing(Job::getUpdatedAt).reversed()).collect(Collectors.toList());
+
     }
 
 
