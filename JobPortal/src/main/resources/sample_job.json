@@ -1,0 +1,22 @@
+[
+  {
+    "updatedAt": 1613473735212,
+    "createdAt": 1613473735212,
+    "jobId": "7e627d6c-78db-48fb-af2e-797dffc61d65",
+    "title": "Backend Developer",
+    "company": "CRED",
+    "description": "Posting for a backend developer with 1+ experience!",
+    "keyword": "Java and Python",
+    "location": "Bangalore"
+  },
+  {
+    "updatedAt": 1613473735313,
+    "createdAt": 1613473735313,
+    "jobId": "7e627d6c-78db-48fb-af2e-797dffc61d64",
+    "title": "Android Developer",
+    "company": "CRED",
+    "description": "Posting for an android developer with 1+ experience!",
+    "keyword": "Java and Android",
+    "location": "Bangalore"
+  }
+]
