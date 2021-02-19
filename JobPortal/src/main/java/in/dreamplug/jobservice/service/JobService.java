@@ -62,40 +62,53 @@ public class JobService implements JobRepo {
 
 
     @Override
-    public List<Job> getJobs(Optional<String> jobId, Optional<String> keyword, Optional<String> location, Optional<String> company) {
+    public List<Job> getJobs(Optional<String> jobId,
+                             Optional<String> keyword,
+                             Optional<String> location,
+                             Optional<String> company,
+                             Integer pageNumber,
+                             Integer pageSize) {
 
 
         List<Job> filteredList = jobs;
+        int offsetValue = 5;
 
 
         if(jobId.isPresent()){
-            System.out.println(jobId.get());
             filteredList = filteredList.stream()
                     .filter(job -> job.getJobId().equals(jobId.get()))
                     .collect(Collectors.toList());
         }
 
         if(keyword.isPresent()){
-            System.out.println(keyword.get());
             filteredList = filteredList.stream()
                     .filter(job -> job.getKeyword().toLowerCase(Locale.ROOT).contains(keyword.get().toLowerCase(Locale.ROOT)))
                     .collect(Collectors.toList());
         }
 
         if(location.isPresent()){
-            System.out.println(location.get());
             filteredList = filteredList.stream()
                     .filter(job -> job.getLocation().equalsIgnoreCase(location.get()))
                     .collect(Collectors.toList());
         }
         if(company.isPresent()){
-            System.out.println(company.get());
             filteredList = filteredList.stream()
                     .filter(job -> job.getCompany().equalsIgnoreCase(company.get()))
                     .collect(Collectors.toList());
         }
 
-        return filteredList.stream().sorted(Comparator.comparing(Job::getUpdatedAt).reversed()).collect(Collectors.toList());
+        pageNumber = pageNumber == 0 ? 1 : pageNumber;
+        int startingIndex = ((pageNumber-1) * offsetValue);
+
+        List<Job> finalList = new ArrayList<>();
+
+
+        if(startingIndex < filteredList.size()){
+            finalList =  filteredList.stream().sorted(Comparator.comparing(Job::getUpdatedAt).reversed()).collect(Collectors.toList());
+            finalList = finalList.subList(startingIndex, Math.min(startingIndex+pageSize, filteredList.size()));
+        }
+
+        return finalList;
 
     }
 

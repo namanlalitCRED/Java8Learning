@@ -3,6 +3,7 @@ package in.dreamplug.jobservice.resource;
 
 import in.dreamplug.jobservice.core.JobRepo;
 import in.dreamplug.jobservice.domain.Job;
+import lombok.Builder;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
@@ -30,9 +31,11 @@ public class JobResource {
             @QueryParam("jobId") Optional<String> jobId,
             @QueryParam("keyword") Optional<String> keyword,
             @QueryParam("location") Optional<String> location,
-            @QueryParam("company") Optional<String> company) {
+            @QueryParam("company") Optional<String> company,
+            @QueryParam("pageNumber") @DefaultValue("1") Integer pageNumber,
+            @QueryParam("pageSize") @DefaultValue("5") Integer pageSize) {
 
-        return jobRepo.getJobs(jobId, keyword, location, company);
+        return jobRepo.getJobs(jobId, keyword, location, company, pageNumber, pageSize);
 
     }
 

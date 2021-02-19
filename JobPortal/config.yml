@@ -1,2 +1,8 @@
 server:
   rootPath: /dreamplug/*
+
+
+#databaseConfiguration:
+#  user: ${DB_USER:-root}
+#  password: ${DB_PASSWORD:-Naman@123}
+#  url: "jdbc:mysql://${DB_HOST:-localhost}:${DB_PORT:-3306}/job_service?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true&useSSL=false"
