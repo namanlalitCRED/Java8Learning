@@ -1,0 +1,17 @@
+server:
+  rootPath: /dreamplug/*
+
+dataBaseConfiguration:
+  driverClass: org.mysql.Driver
+  user: root
+  password: Naman@123
+  url: "jdbc:mysql://127.0.0.1:3306/job_service"
+  acquireIncrement: 5
+  initialPoolSize: 10
+  minPoolSize: 10
+  maxPoolSize: 100
+  maxIdleTime: 1800000
+  maxStatements: 500
+  idleConnectionTestPeriod: 1800000
+  testStatement: "SELECT 1 FROM DUAL"
+  connectionTimeout: 3000
