@@ -51,16 +51,5 @@ public class JobResource {
         return jobService.findAllJobs();
     }
 
-////  Find the jobs based on filters
-//    @GET
-//    public List<Job> getJobs(
-//            @QueryParam("title") Optional<String> title,
-//            @QueryParam("keyword") Optional<String> keyword,
-//            @QueryParam("company") Optional<String> company,
-//            @QueryParam("location") Optional<String> location,
-//            @QueryParam("pageNumber") @DefaultValue("1") Integer pageNumber,
-//            @QueryParam("pageSize") @DefaultValue("5") Integer pageSize){
-//        return jobService.findJobs(title, keyword, company, location, pageNumber, pageSize);
-//    }
 
 }

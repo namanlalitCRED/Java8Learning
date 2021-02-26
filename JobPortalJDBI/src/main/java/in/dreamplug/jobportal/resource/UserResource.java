@@ -26,7 +26,6 @@ public class UserResource {
     //  Create a new application
     @POST
     public Response create(final @NotNull User user) {
-        System.out.println("In the resource section");
         final User createdUser = userService.insert(user);
         return Response.status(Response.Status.CREATED).entity(createdUser).build();
     }
@@ -34,7 +33,6 @@ public class UserResource {
     @GET
     @Path("{userId}")
     public User getByUserId(@PathParam("userId") final String userId){
-        System.out.println(userId);
         return userService.getByUserId(userId).orElseThrow(() -> new WebApplicationException("User not found", 404));
     }
 
@@ -42,12 +40,6 @@ public class UserResource {
     public User updateUser(@HeaderParam ("X-User-Id") final String userId, User user){
         return userService.updateUser(userId, user);
     }
-
-
-//    @GET
-//    public User findJobsPerUser(@QueryParam("userId") @NotNull final String userId){
-//        return userService.findJobsPerUser(userId);
-//    }
 
 
 }
