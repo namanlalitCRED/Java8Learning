@@ -1,4 +1,4 @@
-package in.dreamplug.jobportal.domain;
+package in.dreamplug.jobportal.domain.job;
 
 
 import com.codahale.metrics.annotation.Timed;

@@ -1,11 +1,12 @@
-package in.dreamplug.jobportal.domain;
+package in.dreamplug.jobportal.domain.job;
 
 import com.google.common.base.Strings;
+import in.dreamplug.jobportal.domain.Base;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class ExternalBase extends Base{
+public class ExternalBase extends Base {
 
     private String jobId;
 
