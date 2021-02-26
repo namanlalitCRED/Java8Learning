@@ -1,15 +1,11 @@
 package in.dreamplug.jobportal.resource;
 
 import com.codahale.metrics.annotation.Timed;
-import in.dreamplug.jobportal.CreateCheck;
-import in.dreamplug.jobportal.domain.Job;
+import in.dreamplug.jobportal.domain.job.Job;
 import in.dreamplug.jobportal.service.JobService;
-import io.dropwizard.validation.Validated;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jdbi.v3.core.Jdbi;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -38,7 +34,8 @@ public class JobResource {
     @PATCH
     @Path("{jobId}")
     public Response update(@PathParam("jobId") final String jobId, @NotNull final Job job){
-        final Job updatedJob = jobService.updateJob(jobId, job);
+        job.setJobId(jobId);
+        final Job updatedJob = jobService.updateJob(job);
         return Response.status(Response.Status.CREATED).entity(updatedJob).build();
     }
 
@@ -49,16 +46,21 @@ public class JobResource {
         return jobService.getById(jobId).orElseThrow( () -> new WebApplicationException("Job not Found", 404));
     }
 
-//  Find the jobs based on filters
     @GET
-    public List<Job> getJobs(
-            @QueryParam("title") Optional<String> title,
-            @QueryParam("keyword") Optional<String> keyword,
-            @QueryParam("company") Optional<String> company,
-            @QueryParam("location") Optional<String> location,
-            @QueryParam("pageNumber") @DefaultValue("1") Integer pageNumber,
-            @QueryParam("pageSize") @DefaultValue("5") Integer pageSize){
-        return jobService.findJobs(title, keyword, company, location, pageNumber, pageSize);
+    public List<Job> getAllJobs(){
+        return jobService.findAllJobs();
     }
+
+////  Find the jobs based on filters
+//    @GET
+//    public List<Job> getJobs(
+//            @QueryParam("title") Optional<String> title,
+//            @QueryParam("keyword") Optional<String> keyword,
+//            @QueryParam("company") Optional<String> company,
+//            @QueryParam("location") Optional<String> location,
+//            @QueryParam("pageNumber") @DefaultValue("1") Integer pageNumber,
+//            @QueryParam("pageSize") @DefaultValue("5") Integer pageSize){
+//        return jobService.findJobs(title, keyword, company, location, pageNumber, pageSize);
+//    }
 
 }

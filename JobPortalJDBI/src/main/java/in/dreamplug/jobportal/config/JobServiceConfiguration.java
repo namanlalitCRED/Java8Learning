@@ -14,17 +14,5 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class JobServiceConfiguration extends Configuration {
     private DataBaseConfiguration dataBaseConfiguration;
-//    @Valid
-//    @NotNull
-//    private DataSourceFactory database = new DataSourceFactory();
-//
-//        @JsonProperty("database")
-//        public void setDataSourceFactory(DataSourceFactory factory) {
-//            this.database = factory;
-//        }
-//
-//        @JsonProperty("database")
-//        public DataSourceFactory getDataSourceFactory() {
-//            return database;
-//        }
+
 }
