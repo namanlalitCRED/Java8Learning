@@ -7,7 +7,6 @@ import org.jdbi.v3.core.Jdbi;
 
 import javax.ws.rs.WebApplicationException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class JobService {
@@ -23,7 +22,7 @@ public class JobService {
 
 //   Update a new job
     public Job updateJob(final Job job){
-        Job existingJob = getById(job.getJobId()).orElseThrow(() -> new WebApplicationException("Job not Found", 404));
+        Job existingJob = getById(job.getJobId()).orElseThrow(() -> new WebApplicationException("Job not Found"));
         existingJob.merge(job);
         existingJob.preUpdate();
         jdbi.useExtension(JobDao.class, dao -> dao.update(existingJob));

@@ -19,8 +19,8 @@ public class JobApplyService {
 
     public Track insert(Track track){
 
-        User checkUser = userService.getByUserId(track.getUserId()).orElseThrow(() -> new WebApplicationException("User not found",404));
-        Job checkJob = jobService.getById(track.getJobId()).orElseThrow(() -> new WebApplicationException("Job not found",404));
+        User checkUser = userService.getByUserId(track.getUserId()).orElseThrow(() -> new WebApplicationException("User not found"));
+        Job checkJob = jobService.getById(track.getJobId()).orElseThrow(() -> new WebApplicationException("Job not found"));
 
         track.prePersist();
         final long id = jdbi.withExtension(TrackDao.class, dao-> dao.insert(track));
@@ -35,7 +35,7 @@ public class JobApplyService {
     public Track updateTrack(Track track, String userId, String jobId){
         track.setUserId(userId);
         track.setJobId(jobId);
-        Track existingTrack = checkTrack(track).orElseThrow(() -> new WebApplicationException("Not applied for the job", 404));
+        Track existingTrack = checkTrack(track).orElseThrow(() -> new WebApplicationException("No record Found"));
         existingTrack.merge(track);
         existingTrack.preUpdate();
         jdbi.useExtension(TrackDao.class, dao -> dao.updateTrack(existingTrack));
