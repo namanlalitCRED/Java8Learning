@@ -28,11 +28,11 @@ public interface TrackDao {
     @SqlUpdate ("UPDATE user_applications SET status = :t.status, updated_at = :t.updatedAt WHERE external_id = :t.externalId")
     void updateTrack(@BindBean ("t") Track track);
 
-    @SqlQuery("select jobs.job_id, title, company, keyword, location, description, created_at, updated_at from jobs join (select user_applications.job_id from user_applications where user_id = :userId ) j on j.job_id = jobs.job_id")
+    @SqlQuery("select jobs.job_id, jobs.title, jobs.company, jobs.keyword, jobs.location, jobs.description, jobs.created_at, jobs.updated_at from jobs join user_applications on user_applications.job_id = jobs.job_id where user_applications.user_id = :userId")
     @RegisterBeanMapper(Job.class)
     List<Job> getJobsByUserId(@Bind("userId") String userId);
 
-    @SqlQuery("select users.user_id, first_name, last_name, email, mobile_number, created_at, updated_at from users join (select user_applications.user_id from user_applications where user_applications.job_id = :jobId ) j on j.user_id = users.user_id")
+    @SqlQuery("select users.user_id, users.first_name, users.last_name, users.email, users.mobile_number, users.created_at, users.updated_at from users join user_applications on user_applications.user_id = users.user_id where user_applications.job_id = :jobId")
     @RegisterBeanMapper(User.class)
     List<User> getUsersByJobId(@Bind("jobId") String jobId);
 

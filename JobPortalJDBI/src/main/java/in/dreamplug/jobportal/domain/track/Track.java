@@ -28,12 +28,12 @@ public class Track extends ExternalBase implements Mergeable<Track> {
     @Override
     public void merge(Track track) {
 
-        if (StringUtils.isNotBlank(track.getUserId())) {
-            this.userId = track.getUserId();
-        }
-        if (StringUtils.isNotBlank(track.getJobId())) {
-            this.jobId = track.getJobId();
-        }
+//        if (StringUtils.isNotBlank(track.getUserId())) {
+//            this.userId = track.getUserId();
+//        }
+//        if (StringUtils.isNotBlank(track.getJobId())) {
+//            this.jobId = track.getJobId();
+//        }
         if (StringUtils.isNotBlank(track.getStatus())) {
             this.status = track.getStatus();
         }
